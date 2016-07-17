@@ -20,6 +20,8 @@ int[][] pattern = {
 OPC opc;
 
 // Grid coordinates
+int gridX = 20;
+int gridY = 20;
 int gridSquareSize = 15;
 int gridSquareSpacing = 20;
 
