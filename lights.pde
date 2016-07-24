@@ -7,14 +7,14 @@ MidiBus myBus; // The MidiBus
 
 float BPM = 40;
 int[][] pattern = {
-  {0, 0, 0, 0, 0, 1, 0, 0},
-  {0, 0, 0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 1, 0, 0, 0, 0},
-  {0, 1, 0, 0, 0, 0, 0, 0},
-  {0, 0, 1, 0, 0, 0, 0, 0},
-  {1, 0, 0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 0, 0, 0, 1, 0}
+  {0, 0, 1, 0, 1, 0, 0, 0},
+  {0, 0, 0, 0, 1, 0, 0, 0},
+  {0, 0, 0, 1, 1, 0, 0, 0},
+  {0, 1, 0, 0, 1, 0, 0, 0},
+  {0, 0, 1, 0, 1, 0, 0, 0},
+  {0, 1, 0, 0, 1, 0, 0, 0},
+  {1, 0, 0, 0, 1, 0, 0, 0},
+  {0, 1, 0, 0, 1, 0, 0, 0}
 };
 
 OPC opc;
@@ -71,11 +71,39 @@ void setup()
   //opc.ledGrid8x8(64, ledX - ledSpacing * 8, ledY, ledSpacing, 0, true);
   //opc.ledGrid8x8(128, ledX + ledSpacing * 8, ledY, ledSpacing, 0, true);
   
+  //  void ledRing(int index, int count, float x, float y, float radiusmalls, float angle)
+
+
+  int ledCount = 0;
+  //int smallTriangle(float angle, int ledCount)
+  ledCount = opc.smallTriangle(0, ledCount);
+  ledCount = opc.smallTriangle((1*PI)/3, ledCount);
+  ledCount = opc.smallTriangle((2*PI)/3, ledCount);
+  ledCount = opc.smallTriangle((3*PI)/3, ledCount);
+  ledCount = opc.smallTriangle((4*PI)/3, ledCount);
+  ledCount = opc.smallTriangle((5*PI)/3, ledCount);
+
+//  ledCount = opc.bigTriangle(0, ledCount);
+//  ledCount = opc.bigTriangle((1*PI)/3, ledCount);
+//  ledCount = opc.bigTriangle((2*PI)/3, ledCount);
+//  ledCount = opc.bigTriangle((3*PI)/3, ledCount);
+//  ledCount = opc.bigTriangle((4*PI)/3, ledCount);
+//  ledCount = opc.bigTriangle((5*PI)/3, ledCount);
+
+  println(ledCount);
+//  opc.ledRing(0,24, ledX + 0.0, ledY + 76.0,70.0 / 2, 0.0); // X-large
+//  opc.ledRing(24,16,ledX + 61.0,ledY + 34.0,46.0 / 2, 0.0); // large
+//  opc.ledRing(40,12,ledX + 79.0,ledY + 81.0,40.0 / 2, 0.0); // medium
+
+  //  void ledJewel(int index, float x, float y, float angle)
+
+//  opc.ledJewel(52,ledX + 109,ledY + 31,0); // jewel
+
+  //ledStrip(int index, int count, float x, float y, float spacing, float angle, boolean reversed)
+//  opc.ledStrip(59, 64, ledX + 50, ledY, 2, PI, false);
+//  opc.ledStrip(123, 64, ledX + 50, ledY, 2, (2*PI)/3,false);
+//  opc.ledStrip(187, 64, ledX + 50, ledY, 2, (4*PI)/3,false);
   
-  opc.ledRing(0,24, ledX + 0.0, ledY + 76.0,70.0 / 2, 0.0); // X-large
-  opc.ledRing(24,16,ledX + 61.0,ledY + 34.0,46.0 / 2, 0.0); // large
-  opc.ledRing(40,12,ledX + 79.0,ledY + 81.0,40.0 / 2, 0.0); // medium
-  opc.ledJewel(52,ledX + 109,ledY + 31,0); // jewel
   
   MidiBus.list();
   myBus = new MidiBus(this, "SmartPAD", "SmartPAD"); // Create a new MidiBus using the device names to select the Midi input and output devices respectively.

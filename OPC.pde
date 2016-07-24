@@ -76,7 +76,47 @@ public class OPC implements Runnable
   void ledJewel(int index, float x, float y, float angle)
   {
     led(index, int(x), int(y));
-    ledRing(index+1,6,x,y,25/2,angle);
+    ledRing(index+1,6,x,y,15/2,angle);
+  }
+  
+  int rotateX(int X, int Y, float angle)
+  {
+    return int(X*(cos(angle)) - Y*(sin(angle)));
+  }
+
+  int rotateY(int X, int Y, float angle)
+  {
+    return int(Y*(cos(angle)) - X*(sin(angle)));
+  }
+
+  int bigTriangle(float angle, int ledCount)
+  {
+    int ledX = 400;
+    int ledY = 360/2;
+    int centerX = rotateX(0,70,angle);
+    int centerY = rotateY(0,70,angle);
+    ledRing(ledCount,24, ledX + centerX, ledY + centerY,50.0 / 2, 0.0); // X-large
+    return ledCount + 24;
+  }
+
+  int smallTriangle(float angle, int ledCount)
+  {
+    int ledX = 400;
+    int ledY = 360/2;
+    float centerX = rotateX(-9,74,angle);
+    float centerY = rotateY(-9,74,angle);
+    opc.ledRing(ledCount,16, ledX + centerX,ledY + centerY,36.0 / 2, 0.0); // large
+    ledCount += 16;
+    centerX = rotateX(9,41,angle);
+    centerY = rotateY(9,41,angle);
+//    opc.ledRing(ledCount,12, ledX + centerX,ledY + centerY,30.0 / 2, 0.0); // medium
+    ledCount += 12;
+    centerX = rotateX(39,71,angle);
+    centerY = rotateY(39,71,angle);
+  //  void ledJewel(int index, float x, float y, float angle)
+//    opc.ledJewel(ledCount, ledX + centerX,ledY + centerY,0); // jewel
+    ledCount += 7;
+    return ledCount;
   }
 
   // Set the location of several LEDs arranged in a grid. The first strip is
