@@ -51,7 +51,7 @@ long startTime, pauseTime;
 
 void setup()
 {
-  size(640, 360);
+  size(800, 800);
 
   imgGreenDot = loadImage("greenDot.png");
   imgOrangeDot = loadImage("orangeDot.png");
@@ -100,24 +100,33 @@ void setup()
 
   //int bitOuter2L(float angle, int ledCount)
   ledCount = opc.bigOuter2L(0, ledCount);
-  ledCount = opc.bigOuter2L((1*PI)/3, ledCount);
-  ledCount = opc.bigOuter2L((2*PI)/3, ledCount);
+  ledCount = opc.bigOuter4L((1*PI)/3, ledCount);
+  ledCount = opc.bigOuter4L((2*PI)/3, ledCount);
   ledCount = opc.bigOuter2L((3*PI)/3, ledCount);
-  ledCount = opc.bigOuter2L((4*PI)/3, ledCount);
+  ledCount = opc.bigOuter4L((4*PI)/3, ledCount);
   ledCount = opc.bigOuter2L((5*PI)/3, ledCount);
-
-  ledCount = opc.bigOuter2R(0, ledCount);
-  ledCount = opc.bigOuter2R((1*PI)/3, ledCount);
-  ledCount = opc.bigOuter2R((2*PI)/3, ledCount);
-  ledCount = opc.bigOuter2R((3*PI)/3, ledCount);
-  ledCount = opc.bigOuter2R((4*PI)/3, ledCount);
-  ledCount = opc.bigOuter2R((5*PI)/3, ledCount);
-
-  //ledStrip(int index, int count, float x, float y, float spacing, float angle, boolean reversed)
-//  opc.ledStrip(59, 64, ledX + 50, ledY, 2, PI, false);
-//  opc.ledStrip(123, 64, ledX + 50, ledY, 2, (2*PI)/3,false);
-//  opc.ledStrip(187, 64, ledX + 50, ledY, 2, (4*PI)/3,false);
   
+  ledCount = opc.bigOuter4R(0, ledCount);
+  ledCount = opc.bigOuter2R((1*PI)/3, ledCount);
+  ledCount = opc.bigOuter4R((2*PI)/3, ledCount);
+  ledCount = opc.bigOuter2R((3*PI)/3, ledCount);
+  ledCount = opc.bigOuter4R((4*PI)/3, ledCount);
+  ledCount = opc.bigOuter2R((5*PI)/3, ledCount);
+  
+  ledCount = opc.benchL((1*PI)/3, ledCount);
+  ledCount = opc.benchR((1*PI)/3, ledCount);
+  ledCount = opc.benchL((3*PI)/3, ledCount);
+  ledCount = opc.benchR((3*PI)/3, ledCount);
+  ledCount = opc.benchL((5*PI)/3, ledCount);  
+  ledCount = opc.benchR((5*PI)/3, ledCount);  
+
+
+  ledCount = opc.cocoon(0, ledCount);
+  ledCount = opc.cocoon((1*PI)/3, ledCount);
+  ledCount = opc.cocoon((2*PI)/3, ledCount);
+  ledCount = opc.cocoon((3*PI)/3, ledCount);
+  ledCount = opc.cocoon((4*PI)/3, ledCount);
+  ledCount = opc.cocoon((5*PI)/3, ledCount);
   
   MidiBus.list();
   myBus = new MidiBus(this, "SmartPAD", "SmartPAD"); // Create a new MidiBus using the device names to select the Midi input and output devices respectively.
@@ -292,6 +301,31 @@ void drawDotEffect(int column, float time, PImage im)
   float centerX = ledX + (column - 1.5) * 75.0;
   float topY = ledY + ledHeight/2 - time * motionSpeed;
   int brightness = int(255 - max(0, fadeSpeed * time));
+
+  // Adjust the 'top' position so the dot seems to appear on-time
+  topY -= size * 0.4;
+ 
+  if (brightness > 0) {
+    blendMode(ADD);
+    tint(brightness);
+    image(im, centerX - size/2, topY, size, size);
+  }
+}
+
+void drawDotRadial(int column, float time, PImage im, float angle)
+{
+  // Draw an image dot that hits the bottom of the array at the beat,
+  // then quickly shrinks and fades.
+
+  float motionSpeed = rowsPerSecond * 90.0;
+  float fadeSpeed = motionSpeed * 1.0;
+  float shrinkSpeed = motionSpeed * 1.2;
+  float size = 200 - max(0, time * shrinkSpeed);
+  float centerX = ledX + (column - 1.5) * 75.0;
+  float topY = ledY + ledHeight/2 - time * motionSpeed;
+  int brightness = int(255 - max(0, fadeSpeed * time));
+
+  
 
   // Adjust the 'top' position so the dot seems to appear on-time
   topY -= size * 0.4;
