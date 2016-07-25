@@ -77,27 +77,41 @@ void setup()
   int ledCount = 0;
   //int smallTriangle(float angle, int ledCount)
   ledCount = opc.smallTriangle(0, ledCount);
-  ledCount = opc.smallTriangle((1*PI)/3, ledCount);
+  ledCount = opc.bigTriangle((1*PI)/3, ledCount);
   ledCount = opc.smallTriangle((2*PI)/3, ledCount);
   ledCount = opc.smallTriangle((3*PI)/3, ledCount);
-  ledCount = opc.smallTriangle((4*PI)/3, ledCount);
-  ledCount = opc.smallTriangle((5*PI)/3, ledCount);
+  ledCount = opc.bigTriangle((4*PI)/3, ledCount);
+  ledCount = opc.bigTriangle((5*PI)/3, ledCount);
 
-//  ledCount = opc.bigTriangle(0, ledCount);
-//  ledCount = opc.bigTriangle((1*PI)/3, ledCount);
-//  ledCount = opc.bigTriangle((2*PI)/3, ledCount);
-//  ledCount = opc.bigTriangle((3*PI)/3, ledCount);
-//  ledCount = opc.bigTriangle((4*PI)/3, ledCount);
-//  ledCount = opc.bigTriangle((5*PI)/3, ledCount);
+  ledCount = opc.smallTrapezoidL(0,ledCount);
+  ledCount = opc.bigTrapezoidL((1*PI)/3,ledCount);
+  ledCount = opc.smallTrapezoidL((2*PI)/3,ledCount);
+  ledCount = opc.bigTrapezoidL((3*PI)/3,ledCount);
+  ledCount = opc.smallTrapezoidL((4*PI)/3,ledCount);
+  ledCount = opc.smallTrapezoidL((5*PI)/3,ledCount);
 
-  println(ledCount);
-//  opc.ledRing(0,24, ledX + 0.0, ledY + 76.0,70.0 / 2, 0.0); // X-large
-//  opc.ledRing(24,16,ledX + 61.0,ledY + 34.0,46.0 / 2, 0.0); // large
-//  opc.ledRing(40,12,ledX + 79.0,ledY + 81.0,40.0 / 2, 0.0); // medium
+  ledCount = opc.smallTrapezoidR(0,ledCount);
+  ledCount = opc.smallTrapezoidR((1*PI)/3,ledCount);
+  ledCount = opc.smallTrapezoidR((2*PI)/3,ledCount);
+  ledCount = opc.bigTrapezoidR((3*PI)/3,ledCount);
+  ledCount = opc.smallTrapezoidR((4*PI)/3,ledCount);
+  ledCount = opc.smallTrapezoidR((5*PI)/3,ledCount);
 
-  //  void ledJewel(int index, float x, float y, float angle)
 
-//  opc.ledJewel(52,ledX + 109,ledY + 31,0); // jewel
+  //int bitOuter2L(float angle, int ledCount)
+  ledCount = opc.bigOuter2L(0, ledCount);
+  ledCount = opc.bigOuter2L((1*PI)/3, ledCount);
+  ledCount = opc.bigOuter2L((2*PI)/3, ledCount);
+  ledCount = opc.bigOuter2L((3*PI)/3, ledCount);
+  ledCount = opc.bigOuter2L((4*PI)/3, ledCount);
+  ledCount = opc.bigOuter2L((5*PI)/3, ledCount);
+
+  ledCount = opc.bigOuter2R(0, ledCount);
+  ledCount = opc.bigOuter2R((1*PI)/3, ledCount);
+  ledCount = opc.bigOuter2R((2*PI)/3, ledCount);
+  ledCount = opc.bigOuter2R((3*PI)/3, ledCount);
+  ledCount = opc.bigOuter2R((4*PI)/3, ledCount);
+  ledCount = opc.bigOuter2R((5*PI)/3, ledCount);
 
   //ledStrip(int index, int count, float x, float y, float spacing, float angle, boolean reversed)
 //  opc.ledStrip(59, 64, ledX + 50, ledY, 2, PI, false);

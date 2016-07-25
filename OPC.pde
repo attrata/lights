@@ -23,6 +23,9 @@ public class OPC implements Runnable
   String colorCorrection;
   boolean enableShowLocations;
 
+  int ledX;
+  int ledY;
+
   OPC(PApplet parent, String host, int port)
   {
     this.host = host;
@@ -31,6 +34,8 @@ public class OPC implements Runnable
     thread.start();
     this.enableShowLocations = true;
     parent.registerMethod("draw", this);
+    ledX = 400;
+    ledY = 360/2;
   }
 
   // Set the location of a single LED
@@ -76,7 +81,7 @@ public class OPC implements Runnable
   void ledJewel(int index, float x, float y, float angle)
   {
     led(index, int(x), int(y));
-    ledRing(index+1,6,x,y,15/2,angle);
+    ledRing(index+1,6,x,y,7/2,angle);
   }
   
   int rotateX(int X, int Y, float angle)
@@ -86,35 +91,129 @@ public class OPC implements Runnable
 
   int rotateY(int X, int Y, float angle)
   {
-    return int(Y*(cos(angle)) - X*(sin(angle)));
+    return int(Y*(cos(angle)) + X*(sin(angle)));
   }
 
   int bigTriangle(float angle, int ledCount)
   {
-    int ledX = 400;
-    int ledY = 360/2;
-    int centerX = rotateX(0,70,angle);
-    int centerY = rotateY(0,70,angle);
-    ledRing(ledCount,24, ledX + centerX, ledY + centerY,50.0 / 2, 0.0); // X-large
+    int centerX = rotateX(0,35,angle);
+    int centerY = rotateY(0,35,angle);
+    ledRing(ledCount,24, ledX + centerX, ledY + centerY,25.0 / 2, 0.0); // X-large
     return ledCount + 24;
   }
 
   int smallTriangle(float angle, int ledCount)
   {
-    int ledX = 400;
-    int ledY = 360/2;
-    float centerX = rotateX(-9,74,angle);
-    float centerY = rotateY(-9,74,angle);
-    opc.ledRing(ledCount,16, ledX + centerX,ledY + centerY,36.0 / 2, 0.0); // large
+    float centerX = rotateX(0,24,angle);
+    float centerY = rotateY(0,24,angle);
+    ledRing(ledCount,16, ledX + centerX,ledY + centerY,18.0 / 2, 0.0); // large
     ledCount += 16;
-    centerX = rotateX(9,41,angle);
-    centerY = rotateY(9,41,angle);
-//    opc.ledRing(ledCount,12, ledX + centerX,ledY + centerY,30.0 / 2, 0.0); // medium
+    centerX = rotateX(10,41,angle);
+    centerY = rotateY(10,41,angle);
+    ledRing(ledCount,12, ledX + centerX,ledY + centerY,15.0 / 2, 0.0); // medium
     ledCount += 12;
-    centerX = rotateX(39,71,angle);
-    centerY = rotateY(39,71,angle);
-  //  void ledJewel(int index, float x, float y, float angle)
-//    opc.ledJewel(ledCount, ledX + centerX,ledY + centerY,0); // jewel
+    centerX = rotateX(-12,41,angle);
+    centerY = rotateY(-12,41,angle);
+    //void ledJewel(int index, float x, float y, float angle)
+    ledJewel(ledCount, ledX + centerX,ledY + centerY,0); // jewel
+    ledCount += 7;
+    return ledCount;
+  }
+
+  int smallTrapezoidR(float angle, int ledCount)
+  {
+    float centerX = rotateX(-22,65,angle);
+    float centerY = rotateY(-22,65,angle);
+    ledRing(ledCount,16, ledX + centerX,ledY + centerY,18.0 / 2, 0.0); // large
+    ledCount += 16;
+    centerX = rotateX(-10,81,angle);
+    centerY = rotateY(-10,81,angle);
+    ledRing(ledCount,12, ledX + centerX,ledY + centerY,15.0 / 2, 0.0); // medium
+    ledCount += 12;
+    centerX = rotateX(-32,81,angle);
+    centerY = rotateY(-32,81,angle);
+    //void ledJewel(int index, float x, float y, float angle)
+    ledJewel(ledCount, ledX + centerX,ledY + centerY,0); // jewel
+    ledCount += 7;
+    return ledCount;
+  }
+
+  int smallTrapezoidL(float angle, int ledCount)
+  {
+    float centerX = rotateX(22,65,angle);
+    float centerY = rotateY(22,65,angle);
+    ledRing(ledCount,16, ledX + centerX,ledY + centerY,18.0 / 2, 0.0); // large
+    ledCount += 16;
+    centerX = rotateX(10,81,angle);
+    centerY = rotateY(10,81,angle);
+    ledRing(ledCount,12, ledX + centerX,ledY + centerY,15.0 / 2, 0.0); // medium
+    ledCount += 12;
+    centerX = rotateX(32,81,angle);
+    centerY = rotateY(32,81,angle);
+    //void ledJewel(int index, float x, float y, float angle)
+    ledJewel(ledCount, ledX + centerX,ledY + centerY,0); // jewel
+    ledCount += 7;
+    return ledCount;
+  }
+
+
+  int bigTrapezoidR(float angle, int ledCount)
+  {
+    int centerX = rotateX(-18,65,angle);
+    int centerY = rotateY(-18,65,angle);
+    ledRing(ledCount,24, ledX + centerX, ledY + centerY,25.0 / 2, 0.0); // X-large
+    return ledCount + 24;
+  }
+
+  int bigTrapezoidL(float angle, int ledCount)
+  {
+    int centerX = rotateX(18,65,angle);
+    int centerY = rotateY(18,65,angle);
+    ledRing(ledCount,24, ledX + centerX, ledY + centerY,25.0 / 2, 0.0); // X-large
+    return ledCount + 24;
+  }
+
+  int bigOuter2L(float angle, int ledCount)
+  {
+    int centerX = rotateX(18,110,angle);
+    int centerY = rotateY(18,110,angle);
+    ledRing(ledCount,24, ledX + centerX, ledY + centerY,25.0 / 2, 0.0); // X-large
+    ledCount += 24;
+    centerX = rotateX(45,120,angle);
+    centerY = rotateY(45,120,angle);
+     ledRing(ledCount,16, ledX + centerX,ledY + centerY,18.0 / 2, 0.0); // large
+    return ledCount + 16;
+  }
+
+  int bigOuter2R(float angle, int ledCount)
+  {
+    int centerX = rotateX(-18,110,angle);
+    int centerY = rotateY(-18,110,angle);
+    ledRing(ledCount,24, ledX + centerX, ledY + centerY,25.0 / 2, 0.0); // X-large
+    ledCount += 24;
+    centerX = rotateX(-45,120,angle);
+    centerY = rotateY(-45,120,angle);
+     ledRing(ledCount,16, ledX + centerX,ledY + centerY,18.0 / 2, 0.0); // large 
+    return ledCount + 16;
+  }
+
+  int bigOuter4L(float angle, int ledCount)
+  {
+    int centerX = rotateX(45,120,angle);
+    int centerY = rotateY(45,120,angle);
+    ledRing(ledCount,24, ledX + centerX, ledY + centerY,25.0 / 2, 0.0); // X-large
+    ledCount += 24;
+    centerX = rotateX(18,110,angle);
+    centerY = rotateY(18,110,angle);
+    ledRing(ledCount,16, ledX + centerX,ledY + centerY,18.0 / 2, 0.0); // large
+    ledCount += 16;
+    centerX = rotateX(45,110,angle);
+    centerY = rotateY(45,110,angle);
+    ledRing(ledCount,12, ledX + centerX,ledY + centerY,15.0 / 2, 0.0); // medium
+    ledCount += 12;    
+    centerX = rotateX(45,110,angle);
+    centerY = rotateY(45,110,angle);
+    ledJewel(ledCount, ledX + centerX,ledY + centerY,0); // jewel
     ledCount += 7;
     return ledCount;
   }
