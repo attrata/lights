@@ -7,14 +7,14 @@ MidiBus myBus; // The MidiBus
 
 float BPM = 40;
 int[][] pattern = {
-  {0, 0, 1, 0, 1, 0, 0, 0},
-  {0, 0, 0, 0, 1, 0, 0, 0},
-  {0, 0, 0, 1, 1, 0, 0, 0},
-  {0, 1, 0, 0, 1, 0, 0, 0},
-  {0, 0, 1, 0, 1, 0, 0, 0},
-  {0, 1, 0, 0, 1, 0, 0, 0},
-  {1, 0, 0, 0, 1, 0, 0, 0},
-  {0, 1, 0, 0, 1, 0, 0, 0}
+  {1, 0, 0, 0, 0, 0, 0, 0},
+  {0, 1, 1, 0, 0, 0, 0, 0},
+  {0, 1, 0, 0, 0, 0, 0, 0},
+  {1, 0, 0, 0, 0, 0, 0, 0},
+  {1, 0, 1, 0, 0, 0, 0, 0},
+  {0, 1, 1, 0, 0, 0, 0, 0},
+  {1, 0, 1, 0, 0, 0, 0, 0},
+  {1, 1, 0, 0, 0, 0, 0, 0}
 };
 
 OPC opc;
@@ -32,7 +32,7 @@ float patternDuration = pattern.length / rowsPerSecond;
 
 // LED array coordinates
 int ledX = 400;
-int ledY = 360/2;
+int ledY = 400;
 int ledSpacing = 15;
 int ledWidth = ledSpacing * 23;
 int ledHeight = ledSpacing * 7;
@@ -274,7 +274,9 @@ void drawSingleEffect(int column, float firingTime, float now)
     case 1:
     case 2:
     case 3:
-      drawDotEffect(column, timeDelta, dots[column]);
+//      drawDotEffect(column, timeDelta, dots[column]);
+//    drawDotRadial(column, timeDelta, dots[column], 0);  
+    drawDotRadial(column, timeDelta, dots[column], column * PI/3);  
       break;
    
     // Stripes moving from left to right. Each stripe particle is unique based on firingTime.
@@ -289,28 +291,6 @@ void drawSingleEffect(int column, float firingTime, float now)
   }
 }
 
-void drawDotEffect(int column, float time, PImage im)
-{
-  // Draw an image dot that hits the bottom of the array at the beat,
-  // then quickly shrinks and fades.
-
-  float motionSpeed = rowsPerSecond * 90.0;
-  float fadeSpeed = motionSpeed * 1.0;
-  float shrinkSpeed = motionSpeed * 1.2;
-  float size = 200 - max(0, time * shrinkSpeed);
-  float centerX = ledX + (column - 1.5) * 75.0;
-  float topY = ledY + ledHeight/2 - time * motionSpeed;
-  int brightness = int(255 - max(0, fadeSpeed * time));
-
-  // Adjust the 'top' position so the dot seems to appear on-time
-  topY -= size * 0.4;
- 
-  if (brightness > 0) {
-    blendMode(ADD);
-    tint(brightness);
-    image(im, centerX - size/2, topY, size, size);
-  }
-}
 
 void drawDotRadial(int column, float time, PImage im, float angle)
 {
@@ -321,11 +301,39 @@ void drawDotRadial(int column, float time, PImage im, float angle)
   float fadeSpeed = motionSpeed * 1.0;
   float shrinkSpeed = motionSpeed * 1.2;
   float size = 200 - max(0, time * shrinkSpeed);
-  float centerX = ledX + (column - 1.5) * 75.0;
-  float topY = ledY + ledHeight/2 - time * motionSpeed;
+  float centerX = 0; 
+  float topY = (time * motionSpeed) - (size/2) + 400;
   int brightness = int(255 - max(0, fadeSpeed * time));
 
-  
+  // Adjust the 'top' position so the dot seems to appear on-time
+  //topY -= size * 0.4;
+
+//  int rotateX(int X, int Y, float angle)
+  int X = opc.rotateX(int(centerX),int(topY),angle);
+  int Y = opc.rotateY(int(centerX),int(topY),angle);
+
+  X += ledX - (size/2);
+  Y += ledY - (size/2);
+ 
+  if (brightness > 0) {
+    blendMode(ADD);
+    tint(brightness);
+    image(im, X, Y, size, size);
+  }
+}
+
+void drawDotEffect(int column, float time, PImage im)
+{
+  // Draw an image dot that hits the bottom of the array at the beat,
+  // then quickly shrinks and fades.
+
+  float motionSpeed = rowsPerSecond * 90.0;
+  float fadeSpeed = motionSpeed * 1.0;
+  float shrinkSpeed = motionSpeed * 1.2;
+  float size = 200 - max(0, time * shrinkSpeed);
+  float centerX = ledX + (column - 1.5) * 75.0;
+  float topY = (ledY - time * motionSpeed);
+  int brightness = int(255 - max(0, fadeSpeed * time));
 
   // Adjust the 'top' position so the dot seems to appear on-time
   topY -= size * 0.4;
