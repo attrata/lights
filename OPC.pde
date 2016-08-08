@@ -26,6 +26,8 @@ public class OPC implements Runnable
   int ledX;
   int ledY;
 
+  int ledCount;
+
   OPC(PApplet parent, String host, int port)
   {
     this.host = host;
@@ -34,8 +36,9 @@ public class OPC implements Runnable
     thread.start();
     this.enableShowLocations = true;
     parent.registerMethod("draw", this);
-    ledX = 400;
-    ledY = 800/2;
+    ledX = 200;
+    ledY = 200;
+    this.ledCount = 0;
   }
 
   // Set the location of a single LED
@@ -94,33 +97,32 @@ public class OPC implements Runnable
     return int(Y*(cos(angle)) + X*(sin(angle)));
   }
 
-  int bigTriangle(float angle, int ledCount)
+  void bigTriangle(float angle)
   {
-    int centerX = rotateX(0,35,angle);
-    int centerY = rotateY(0,35,angle);
-    ledRing(ledCount,24, ledX + centerX, ledY + centerY,25.0 / 2, 0.0); // X-large
-    return ledCount + 24;
+    int centerX = rotateX(0,17,angle);
+    int centerY = rotateY(0,17,angle);
+    ledRing(ledCount,24, ledX + centerX, ledY + centerY,13.0 / 2, 0.0); // X-large
+    ledCount += 24;
   }
 
-  int smallTriangle(float angle, int ledCount)
+  void smallTriangle(float angle)
   {
-    float centerX = rotateX(0,24,angle);
-    float centerY = rotateY(0,24,angle);
+    float centerX = rotateX(0,12,angle);
+    float centerY = rotateY(0,12,angle);
     ledRing(ledCount,16, ledX + centerX,ledY + centerY,18.0 / 2, 0.0); // large
     ledCount += 16;
-    centerX = rotateX(10,41,angle);
-    centerY = rotateY(10,41,angle);
-    ledRing(ledCount,12, ledX + centerX,ledY + centerY,15.0 / 2, 0.0); // medium
+    centerX = rotateX(5,10,angle);
+    centerY = rotateY(5,10,angle);
+    ledRing(ledCount,12, ledX + centerX,ledY + centerY,7.0 / 2, 0.0); // medium
     ledCount += 12;
-    centerX = rotateX(-12,41,angle);
-    centerY = rotateY(-12,41,angle);
+    centerX = rotateX(-6,20,angle);
+    centerY = rotateY(-6,20,angle);
     //void ledJewel(int index, float x, float y, float angle)
     ledJewel(ledCount, ledX + centerX,ledY + centerY,0); // jewel
     ledCount += 7;
-    return ledCount;
   }
 
-  int smallTrapezoidR(float angle, int ledCount)
+  void smallTrapezoidR(float angle)
   {
     float centerX = rotateX(-22,65,angle);
     float centerY = rotateY(-22,65,angle);
@@ -135,10 +137,9 @@ public class OPC implements Runnable
     //void ledJewel(int index, float x, float y, float angle)
     ledJewel(ledCount, ledX + centerX,ledY + centerY,0); // jewel
     ledCount += 7;
-    return ledCount;
   }
 
-  int smallTrapezoidL(float angle, int ledCount)
+  void smallTrapezoidL(float angle)
   {
     float centerX = rotateX(22,65,angle);
     float centerY = rotateY(22,65,angle);
@@ -153,27 +154,26 @@ public class OPC implements Runnable
     //void ledJewel(int index, float x, float y, float angle)
     ledJewel(ledCount, ledX + centerX,ledY + centerY,0); // jewel
     ledCount += 7;
-    return ledCount;
   }
 
 
-  int bigTrapezoidR(float angle, int ledCount)
+  void bigTrapezoidR(float angle)
   {
     int centerX = rotateX(-18,65,angle);
     int centerY = rotateY(-18,65,angle);
     ledRing(ledCount,24, ledX + centerX, ledY + centerY,25.0 / 2, 0.0); // X-large
-    return ledCount + 24;
+    ledCount += 24;
   }
 
-  int bigTrapezoidL(float angle, int ledCount)
+  void bigTrapezoidL(float angle)
   {
     int centerX = rotateX(18,65,angle);
     int centerY = rotateY(18,65,angle);
     ledRing(ledCount,24, ledX + centerX, ledY + centerY,25.0 / 2, 0.0); // X-large
-    return ledCount + 24;
+    ledCount += 24;
   }
 
-  int bigOuter2L(float angle, int ledCount)
+  void bigOuter2L(float angle)
   {
     int centerX = rotateX(18,110,angle);
     int centerY = rotateY(18,110,angle);
@@ -181,11 +181,11 @@ public class OPC implements Runnable
     ledCount += 24;
     centerX = rotateX(45,120,angle);
     centerY = rotateY(45,120,angle);
-     ledRing(ledCount,16, ledX + centerX,ledY + centerY,18.0 / 2, 0.0); // large
-    return ledCount + 16;
+    ledRing(ledCount,16, ledX + centerX,ledY + centerY,18.0 / 2, 0.0); // large
+    ledCount += 16;
   }
 
-  int bigOuter2R(float angle, int ledCount)
+  void bigOuter2R(float angle)
   {
     int centerX = rotateX(-18,110,angle);
     int centerY = rotateY(-18,110,angle);
@@ -193,11 +193,11 @@ public class OPC implements Runnable
     ledCount += 24;
     centerX = rotateX(-45,120,angle);
     centerY = rotateY(-45,120,angle);
-     ledRing(ledCount,16, ledX + centerX,ledY + centerY,18.0 / 2, 0.0); // large 
-    return ledCount + 16;
+    ledRing(ledCount,16, ledX + centerX,ledY + centerY,18.0 / 2, 0.0); // large 
+    ledCount += 16;
   }
 
-  int bigOuter4L(float angle, int ledCount)
+  void bigOuter4L(float angle)
   {
     int centerX = rotateX(45,125,angle);
     int centerY = rotateY(45,125,angle);
@@ -215,10 +215,9 @@ public class OPC implements Runnable
     centerY = rotateY(15,130,angle);
     ledJewel(ledCount, ledX + centerX,ledY + centerY,0); // jewel
     ledCount += 7;
-    return ledCount;
   }
 
-  int bigOuter4R(float angle, int ledCount)
+  void bigOuter4R(float angle)
   {
     int centerX = rotateX(-45,125,angle);
     int centerY = rotateY(-45,125,angle);
@@ -236,10 +235,9 @@ public class OPC implements Runnable
     centerY = rotateY(-15,130,angle);
     ledJewel(ledCount, ledX + centerX,ledY + centerY,0); // jewel
     ledCount += 7;
-    return ledCount;
   }
   
-  int benchL(float angle, int ledCount)
+  void benchL(float angle)
   {
     int centerX = rotateX(12,180,angle);
     int centerY = rotateY(12,180,angle);
@@ -251,10 +249,9 @@ public class OPC implements Runnable
     centerY = rotateY(12,240,angle);
     ledStrip(ledCount, 64, ledX + centerX,ledY + centerY, 1, PI/2 + angle, false);
     ledCount += 64;
-    return ledCount;
   }
 
-  int benchR(float angle, int ledCount)
+  void benchR(float angle)
   {
     int centerX = rotateX(-12,180,angle);
     int centerY = rotateY(-12,180,angle);
@@ -266,16 +263,14 @@ public class OPC implements Runnable
     centerY = rotateY(-12,240,angle);
     ledStrip(ledCount, 64, ledX + centerX,ledY + centerY, 1, PI/2 + angle, false);
     ledCount += 64;
-    return ledCount;
   }
   
-  int cocoon(float angle, int ledCount)
+  void cocoon(float angle)
   {
     int centerX = rotateX(0,280,angle);
     int centerY = rotateY(0,280,angle);
     ledStrip(ledCount, 32, ledX + centerX,ledY + centerY, 1, PI/2 + angle, false);
     ledCount += 32;
-    return ledCount;
   }
   
   

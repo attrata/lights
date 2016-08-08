@@ -5,7 +5,7 @@ MidiBus myBus; // The MidiBus
  * A simple grid sequencer, launching several effects in rhythm.
  */
 
-float BPM = 40;
+float BPM = 30;
 int[][] pattern = {
   {1, 0, 0, 0, 0, 0, 0, 0},
   {0, 1, 1, 0, 0, 0, 0, 0},
@@ -31,8 +31,8 @@ float rowDuration = 1.0 / rowsPerSecond;
 float patternDuration = pattern.length / rowsPerSecond;
 
 // LED array coordinates
-int ledX = 400;
-int ledY = 400;
+int ledX = 200;
+int ledY = 200;
 int ledSpacing = 15;
 int ledWidth = ledSpacing * 23;
 int ledHeight = ledSpacing * 7;
@@ -51,7 +51,7 @@ long startTime, pauseTime;
 
 void setup()
 {
-  size(800, 800);
+  size(400, 400);
 
   imgGreenDot = loadImage("greenDot.png");
   imgOrangeDot = loadImage("orangeDot.png");
@@ -74,60 +74,60 @@ void setup()
   //  void ledRing(int index, int count, float x, float y, float radiusmalls, float angle)
 
 
-  int ledCount = 0;
   //int smallTriangle(float angle, int ledCount)
-  ledCount = opc.smallTriangle(0, ledCount);
-  ledCount = opc.bigTriangle((1*PI)/3, ledCount);
-  ledCount = opc.smallTriangle((2*PI)/3, ledCount);
-  ledCount = opc.smallTriangle((3*PI)/3, ledCount);
-  ledCount = opc.bigTriangle((4*PI)/3, ledCount);
-  ledCount = opc.bigTriangle((5*PI)/3, ledCount);
+   opc.smallTriangle(0);
+   opc.bigTriangle((1*PI)/3);
+   opc.smallTriangle((2*PI)/3);
+   opc.smallTriangle((3*PI)/3);
+   opc.bigTriangle((4*PI)/3);
+   opc.bigTriangle((5*PI)/3);
 
-  ledCount = opc.smallTrapezoidL(0,ledCount);
-  ledCount = opc.bigTrapezoidL((1*PI)/3,ledCount);
-  ledCount = opc.smallTrapezoidL((2*PI)/3,ledCount);
-  ledCount = opc.bigTrapezoidL((3*PI)/3,ledCount);
-  ledCount = opc.smallTrapezoidL((4*PI)/3,ledCount);
-  ledCount = opc.smallTrapezoidL((5*PI)/3,ledCount);
+   opc.smallTrapezoidL(0);
+   opc.bigTrapezoidL((1*PI)/3);
+   opc.smallTrapezoidL((2*PI)/3);
+   opc.bigTrapezoidL((3*PI)/3);
+   opc.smallTrapezoidL((4*PI)/3);
+   opc.smallTrapezoidL((5*PI)/3);
 
-  ledCount = opc.smallTrapezoidR(0,ledCount);
-  ledCount = opc.smallTrapezoidR((1*PI)/3,ledCount);
-  ledCount = opc.smallTrapezoidR((2*PI)/3,ledCount);
-  ledCount = opc.bigTrapezoidR((3*PI)/3,ledCount);
-  ledCount = opc.smallTrapezoidR((4*PI)/3,ledCount);
-  ledCount = opc.smallTrapezoidR((5*PI)/3,ledCount);
+   opc.smallTrapezoidR(0);
+   opc.smallTrapezoidR((1*PI)/3);
+   opc.smallTrapezoidR((2*PI)/3);
+   opc.bigTrapezoidR((3*PI)/3);
+   opc.smallTrapezoidR((4*PI)/3);
+   opc.smallTrapezoidR((5*PI)/3);
 
 
   //int bitOuter2L(float angle, int ledCount)
-  ledCount = opc.bigOuter2L(0, ledCount);
-  ledCount = opc.bigOuter4L((1*PI)/3, ledCount);
-  ledCount = opc.bigOuter4L((2*PI)/3, ledCount);
-  ledCount = opc.bigOuter2L((3*PI)/3, ledCount);
-  ledCount = opc.bigOuter4L((4*PI)/3, ledCount);
-  ledCount = opc.bigOuter2L((5*PI)/3, ledCount);
+/*   opc.bigOuter2L(0);
+   opc.bigOuter4L((1*PI)/3);
+   opc.bigOuter4L((2*PI)/3);
+   opc.bigOuter2L((3*PI)/3);
+   opc.bigOuter4L((4*PI)/3);
+   opc.bigOuter2L((5*PI)/3);
   
-  ledCount = opc.bigOuter4R(0, ledCount);
-  ledCount = opc.bigOuter2R((1*PI)/3, ledCount);
-  ledCount = opc.bigOuter4R((2*PI)/3, ledCount);
-  ledCount = opc.bigOuter2R((3*PI)/3, ledCount);
-  ledCount = opc.bigOuter4R((4*PI)/3, ledCount);
-  ledCount = opc.bigOuter2R((5*PI)/3, ledCount);
-  
-  ledCount = opc.benchL((1*PI)/3, ledCount);
-  ledCount = opc.benchR((1*PI)/3, ledCount);
-  ledCount = opc.benchL((3*PI)/3, ledCount);
-  ledCount = opc.benchR((3*PI)/3, ledCount);
-  ledCount = opc.benchL((5*PI)/3, ledCount);  
-  ledCount = opc.benchR((5*PI)/3, ledCount);  
+   opc.bigOuter4R(0);
+   opc.bigOuter2R((1*PI)/3);
+   opc.bigOuter4R((2*PI)/3);
+   opc.bigOuter2R((3*PI)/3);
+   opc.bigOuter4R((4*PI)/3);
+   opc.bigOuter2R((5*PI)/3);
+*/  
+/*   opc.benchL((1*PI)/3);
+   opc.benchR((1*PI)/3);
+   opc.benchL((3*PI)/3);
+   opc.benchR((3*PI)/3);
+   opc.benchL((5*PI)/3);  
+   opc.benchR((5*PI)/3);  
 
 
-  ledCount = opc.cocoon(0, ledCount);
-  ledCount = opc.cocoon((1*PI)/3, ledCount);
-  ledCount = opc.cocoon((2*PI)/3, ledCount);
-  ledCount = opc.cocoon((3*PI)/3, ledCount);
-  ledCount = opc.cocoon((4*PI)/3, ledCount);
-  ledCount = opc.cocoon((5*PI)/3, ledCount);
-  
+   opc.cocoon(0);
+   opc.cocoon((1*PI)/3);
+   opc.cocoon((2*PI)/3);
+   opc.cocoon((3*PI)/3);
+   opc.cocoon((4*PI)/3);
+   opc.cocoon((5*PI)/3);
+*/
+
   MidiBus.list();
   myBus = new MidiBus(this, "SmartPAD", "SmartPAD"); // Create a new MidiBus using the device names to select the Midi input and output devices respectively.
   myBus.sendControllerChange(0, 0, 90); // Send a controllerChange
@@ -276,6 +276,7 @@ void drawSingleEffect(int column, float firingTime, float now)
     case 3:
 //      drawDotEffect(column, timeDelta, dots[column]);
 //    drawDotRadial(column, timeDelta, dots[column], 0);  
+//    drawDotRadial(column, timeDelta, dots[column], column * PI/3 + (timeDelta / 5));  
     drawDotRadial(column, timeDelta, dots[column], column * PI/3);  
       break;
    
@@ -317,7 +318,7 @@ void drawDotRadial(int column, float time, PImage im, float angle)
  
   if (brightness > 0) {
     blendMode(ADD);
-    tint(brightness);
+    tint(2 * brightness/3);
     image(im, X, Y, size, size);
   }
 }
@@ -351,7 +352,7 @@ void drawSpinnerEffect(float time, PImage im)
   if (t < -1 || t > 1) return;
 
   float angle = time * 5.0;
-  float size = 400;
+  float size = 800;
   int alpha = int(128 * (1.0 + cos(t * PI)));
 
   if (alpha > 0) {
@@ -374,6 +375,24 @@ void drawFlashEffect(float time)
   blendMode(ADD);
   fill(64 * pow(1.0 - t, 1.5));
   rect(0, 0, width, height);
+}
+
+void drawStripeRotate(float identity, float time)
+{
+  // Pick a pseudorandom dot and Y position
+  randomSeed(int(identity * 1e3));
+  PImage im = dots[int(random(dots.length))];
+  float y = ledY - ledHeight/2 + random(ledHeight);
+
+  // Animation
+  float motionSpeed = rowsPerSecond * 400.0;
+  float x = ledX - ledWidth/2 + time * motionSpeed;
+  float sizeX = 300;
+  float sizeY = 30;
+  
+  blendMode(ADD);
+  tint(255);
+  image(im, x - sizeX/2, y - sizeY/2, sizeX, sizeY);   
 }
 
 void drawStripeEffect(float identity, float time)
