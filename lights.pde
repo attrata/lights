@@ -90,16 +90,16 @@ void setup()
   opc.bigTrapezoidR((4*PI)/3);
   opc.ledCount = 64 * 3; //next channel
 
-  opc.bigOuter2L((3*PI)/3);
+  opc.bigOuter4L((3*PI)/3);
   opc.ledCount = 64 * 4; //next channel
 
-  opc.bigOuter4R((3*PI)/3);
+  opc.bigOuter2R((3*PI)/3);
   opc.ledCount = 64 * 5; //next channel
 
-  opc.bigOuter4L((4*PI)/3);
+  opc.bigOuter2L((4*PI)/3);
   opc.ledCount = 64 * 6; //next channel
 
-  opc.bigOuter2R((4*PI)/3);
+  opc.bigOuter4R((4*PI)/3);
 
 
   //fadecandy AGQMRVHZJNWDEVKN, Brandy
@@ -127,7 +127,6 @@ void setup()
 
   opc.bigOuter2R((2*PI)/3);
 
-
   //fadecandy GSIOJZCIYGHZZHGT, Charlotte
   opc.ledCount = 1024;
   opc.smallTriangle((5*PI)/3);
@@ -142,13 +141,13 @@ void setup()
   opc.bigTrapezoidR((6*PI)/3);
   opc.ledCount = 1024 + (64 * 3); //next channel
 
-  opc.bigOuter2L((5*PI)/3);
+  opc.bigOuter4L((5*PI)/3);
   opc.ledCount = 1024 + (64 * 4); //next channel
 
   opc.bigOuter4R((5*PI)/3);
   opc.ledCount = 1024 + (64 * 5); //next channel
 
-  opc.bigOuter4L((6*PI)/3);
+  opc.bigOuter2L((6*PI)/3);
   opc.ledCount = 1024 + (64 * 6); //next channel
 
   opc.bigOuter2R((6*PI)/3);
@@ -180,27 +179,10 @@ void setup()
   opc.cocoon((4*PI)/3);
   opc.cocoon((5*PI)/3);
   
-  
-  
-  
-/*   
-   opc.benchL((3*PI)/3);
-   opc.benchR((3*PI)/3);
-   opc.benchL((5*PI)/3);  
-   opc.benchR((5*PI)/3);  
-
-
-   opc.cocoon((2*PI)/3);
-   opc.cocoon((3*PI)/3);
-   opc.cocoon((4*PI)/3);
-   opc.cocoon((5*PI)/3);
-*/
-
   MidiBus.list();
   myBus = new MidiBus(this, "SmartPAD", "SmartPAD"); // Create a new MidiBus using the device names to select the Midi input and output devices respectively.
   myBus.sendControllerChange(0, 0, 90); // Send a controllerChange
 
-//  opc.ledRing(64,24,ledX - 75,ledY + 42,70.0 / 2, 0.0);
   // Init timekeeping, start the pattern from the beginning
   startPattern();
 }
