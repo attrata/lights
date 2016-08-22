@@ -7,12 +7,12 @@ MidiBus myBus; // The MidiBus
 
 float BPM = 30;
 int[][] pattern = {
-  {1, 0, 0, 0, 0, 0, 0, 0},
+  {1, 0, 0, 1, 0, 0, 0, 1},
   {0, 1, 1, 0, 0, 0, 0, 0},
-  {0, 1, 0, 0, 0, 0, 0, 0},
+  {0, 1, 0, 0, 0, 0, 1, 0},
   {1, 0, 0, 0, 0, 0, 0, 0},
-  {1, 0, 1, 0, 0, 0, 0, 0},
-  {0, 1, 1, 0, 0, 0, 0, 0},
+  {1, 0, 1, 0, 1, 0, 0, 0},
+  {0, 1, 1, 0, 0, 1, 0, 0},
   {1, 0, 1, 0, 0, 0, 0, 0},
   {1, 1, 0, 0, 0, 0, 0, 0}
 };
@@ -31,8 +31,8 @@ float rowDuration = 1.0 / rowsPerSecond;
 float patternDuration = pattern.length / rowsPerSecond;
 
 // LED array coordinates
-int ledX = 200;
-int ledY = 200;
+int ledX = 400;
+int ledY = 400;
 int ledSpacing = 15;
 int ledWidth = ledSpacing * 23;
 int ledHeight = ledSpacing * 7;
@@ -51,7 +51,7 @@ long startTime, pauseTime;
 
 void setup()
 {
-  size(400, 400);
+  size(800, 800);
 
   imgGreenDot = loadImage("greenDot.png");
   imgOrangeDot = loadImage("orangeDot.png");
@@ -70,58 +70,126 @@ void setup()
   //opc.ledGrid8x8(0, ledX, ledY, ledSpacing, 0, true);
   //opc.ledGrid8x8(64, ledX - ledSpacing * 8, ledY, ledSpacing, 0, true);
   //opc.ledGrid8x8(128, ledX + ledSpacing * 8, ledY, ledSpacing, 0, true);
-  
+
   //  void ledRing(int index, int count, float x, float y, float radiusmalls, float angle)
 
 
   //int smallTriangle(float angle, int ledCount)
-   opc.smallTriangle(0);
-   opc.bigTriangle((1*PI)/3);
-   opc.smallTriangle((2*PI)/3);
-   opc.smallTriangle((3*PI)/3);
-   opc.bigTriangle((4*PI)/3);
-   opc.bigTriangle((5*PI)/3);
 
-   opc.smallTrapezoidL(0);
-   opc.bigTrapezoidL((1*PI)/3);
-   opc.smallTrapezoidL((2*PI)/3);
-   opc.bigTrapezoidL((3*PI)/3);
-   opc.smallTrapezoidL((4*PI)/3);
-   opc.smallTrapezoidL((5*PI)/3);
+  // NXLZOIUUKOJFVTEV, Alice
+  opc.ledCount = 0;
+  opc.smallTriangle((3*PI)/3);
+  opc.bigTriangle((4*PI)/3);
+  opc.ledCount = 64; //next channel
 
-   opc.smallTrapezoidR(0);
-   opc.smallTrapezoidR((1*PI)/3);
-   opc.smallTrapezoidR((2*PI)/3);
-   opc.bigTrapezoidR((3*PI)/3);
-   opc.smallTrapezoidR((4*PI)/3);
-   opc.smallTrapezoidR((5*PI)/3);
+  opc.bigTrapezoidL((3*PI)/3);
+  opc.smallTrapezoidR((3*PI)/3);
+  opc.ledCount = 64 * 2; //next channel
+
+  opc.smallTrapezoidL((4*PI)/3);
+  opc.bigTrapezoidR((4*PI)/3);
+  opc.ledCount = 64 * 3; //next channel
+
+  opc.bigOuter2L((3*PI)/3);
+  opc.ledCount = 64 * 4; //next channel
+
+  opc.bigOuter4R((3*PI)/3);
+  opc.ledCount = 64 * 5; //next channel
+
+  opc.bigOuter4L((4*PI)/3);
+  opc.ledCount = 64 * 6; //next channel
+
+  opc.bigOuter2R((4*PI)/3);
 
 
-  //int bitOuter2L(float angle, int ledCount)
-/*   opc.bigOuter2L(0);
-   opc.bigOuter4L((1*PI)/3);
-   opc.bigOuter4L((2*PI)/3);
-   opc.bigOuter2L((3*PI)/3);
-   opc.bigOuter4L((4*PI)/3);
-   opc.bigOuter2L((5*PI)/3);
+  //fadecandy AGQMRVHZJNWDEVKN, Brandy
+  opc.ledCount = 512;
+  opc.smallTriangle((1*PI)/3);
+  opc.bigTriangle((2*PI)/3);
+  opc.ledCount = 512 + 64; //next channel
+
+  opc.bigTrapezoidL((1*PI)/3);
+  opc.smallTrapezoidR((1*PI)/3);
+  opc.ledCount = 512 + (64 * 2); //next channel
+
+  opc.smallTrapezoidL((2*PI)/3);
+  opc.bigTrapezoidR((2*PI)/3);
+  opc.ledCount = 512 + (64 * 3); //next channel
+
+  opc.bigOuter2L((1*PI)/3);
+  opc.ledCount = 512 + (64 * 4); //next channel
+
+  opc.bigOuter4R((1*PI)/3);
+  opc.ledCount = 512 + (64 * 5); //next channel
+
+  opc.bigOuter4L((2*PI)/3);
+  opc.ledCount = 512 + (64 * 6); //next channel
+
+  opc.bigOuter2R((2*PI)/3);
+
+
+  //fadecandy GSIOJZCIYGHZZHGT, Charlotte
+  opc.ledCount = 1024;
+  opc.smallTriangle((5*PI)/3);
+  opc.bigTriangle((6*PI)/3);
+  opc.ledCount = 1024 + 64; //next channel
+
+  opc.bigTrapezoidL((5*PI)/3);
+  opc.smallTrapezoidR((5*PI)/3);
+  opc.ledCount = 1024 + (64 * 2); //next channel
+
+  opc.smallTrapezoidL((6*PI)/3);
+  opc.bigTrapezoidR((6*PI)/3);
+  opc.ledCount = 1024 + (64 * 3); //next channel
+
+  opc.bigOuter2L((5*PI)/3);
+  opc.ledCount = 1024 + (64 * 4); //next channel
+
+  opc.bigOuter4R((5*PI)/3);
+  opc.ledCount = 1024 + (64 * 5); //next channel
+
+  opc.bigOuter4L((6*PI)/3);
+  opc.ledCount = 1024 + (64 * 6); //next channel
+
+  opc.bigOuter2R((6*PI)/3);
   
-   opc.bigOuter4R(0);
-   opc.bigOuter2R((1*PI)/3);
-   opc.bigOuter4R((2*PI)/3);
-   opc.bigOuter2R((3*PI)/3);
-   opc.bigOuter4R((4*PI)/3);
-   opc.bigOuter2R((5*PI)/3);
-*/  
-/*   opc.benchL((1*PI)/3);
-   opc.benchR((1*PI)/3);
+  //fadecandy ZDLLWETFPHAVCZQL, Denise
+  opc.ledCount = 1536;
+  opc.benchLInner((1*PI)/3);
+  opc.benchRInner((1*PI)/3);
+  opc.benchLOuter((1*PI)/3);
+  opc.benchROuter((1*PI)/3);
+  opc.cocoon(0);
+  opc.cocoon((1*PI)/3);
+
+  //incorrect fadecandy AKUSIKUKNRSRMBOD, 
+  opc.ledCount = 2048;
+  opc.benchLInner((3*PI)/3);
+  opc.benchRInner((3*PI)/3);
+  opc.benchLOuter((3*PI)/3);
+  opc.benchROuter((3*PI)/3);
+  opc.cocoon((2*PI)/3);
+  opc.cocoon((3*PI)/3);
+  
+  //incorrect fadecandy ZXBVWCHBVLAJMXKF
+  opc.ledCount = 2560;
+  opc.benchLInner((5*PI)/3);
+  opc.benchRInner((5*PI)/3);
+  opc.benchLOuter((5*PI)/3);
+  opc.benchROuter((5*PI)/3);
+  opc.cocoon((4*PI)/3);
+  opc.cocoon((5*PI)/3);
+  
+  
+  
+  
+/*   
    opc.benchL((3*PI)/3);
    opc.benchR((3*PI)/3);
    opc.benchL((5*PI)/3);  
    opc.benchR((5*PI)/3);  
 
 
-   opc.cocoon(0);
-   opc.cocoon((1*PI)/3);
    opc.cocoon((2*PI)/3);
    opc.cocoon((3*PI)/3);
    opc.cocoon((4*PI)/3);

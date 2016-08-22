@@ -36,13 +36,13 @@ public class OPC implements Runnable
     thread.start();
     this.enableShowLocations = true;
     parent.registerMethod("draw", this);
-    ledX = 200;
-    ledY = 200;
+    ledX = 400;
+    ledY = 400;
     this.ledCount = 0;
   }
 
   // Set the location of a single LED
-  void led(int index, int x, int y)  
+  void led(int index, int x, int y)
   {
     // For convenience, automatically grow the pixelLocations array. We do want this to be an array,
     // instead of a HashMap, to keep draw() as fast as it can be.
@@ -54,7 +54,7 @@ public class OPC implements Runnable
 
     pixelLocations[index] = x + width * y;
   }
-  
+
   // Set the location of several LEDs arranged in a strip.
   // Angle is in radians, measured clockwise from +X.
   // (x,y) is the center of the strip.
@@ -86,7 +86,7 @@ public class OPC implements Runnable
     led(index, int(x), int(y));
     ledRing(index+1,6,x,y,7/2,angle);
   }
-  
+
   int rotateX(int X, int Y, float angle)
   {
     return int(X*(cos(angle)) - Y*(sin(angle)));
@@ -99,24 +99,24 @@ public class OPC implements Runnable
 
   void bigTriangle(float angle)
   {
-    int centerX = rotateX(0,17,angle);
-    int centerY = rotateY(0,17,angle);
-    ledRing(ledCount,24, ledX + centerX, ledY + centerY,13.0 / 2, 0.0); // X-large
+    int centerX = rotateX(0,35,angle);
+    int centerY = rotateY(0,35,angle);
+    ledRing(ledCount,24, ledX + centerX, ledY + centerY,25.0 / 2, 0.0); // X-large
     ledCount += 24;
   }
 
   void smallTriangle(float angle)
   {
-    float centerX = rotateX(0,12,angle);
-    float centerY = rotateY(0,12,angle);
+    float centerX = rotateX(0,24,angle);
+    float centerY = rotateY(0,24,angle);
     ledRing(ledCount,16, ledX + centerX,ledY + centerY,18.0 / 2, 0.0); // large
     ledCount += 16;
-    centerX = rotateX(5,10,angle);
-    centerY = rotateY(5,10,angle);
-    ledRing(ledCount,12, ledX + centerX,ledY + centerY,7.0 / 2, 0.0); // medium
+    centerX = rotateX(10,41,angle);
+    centerY = rotateY(10,41,angle);
+    ledRing(ledCount,12, ledX + centerX,ledY + centerY,15.0 / 2, 0.0); // medium
     ledCount += 12;
-    centerX = rotateX(-6,20,angle);
-    centerY = rotateY(-6,20,angle);
+    centerX = rotateX(-12,41,angle);
+    centerY = rotateY(-12,41,angle);
     //void ledJewel(int index, float x, float y, float angle)
     ledJewel(ledCount, ledX + centerX,ledY + centerY,0); // jewel
     ledCount += 7;
@@ -237,7 +237,7 @@ public class OPC implements Runnable
     ledCount += 7;
   }
   
-  void benchL(float angle)
+  void benchLInner(float angle)
   {
     int centerX = rotateX(12,180,angle);
     int centerY = rotateY(12,180,angle);
@@ -245,13 +245,9 @@ public class OPC implements Runnable
     // void ledStrip(int index, int count, float x, float y, float spacing, float angle, boolean reversed)
     ledStrip(ledCount, 64, ledX + centerX,ledY + centerY, 1, PI/2 + angle, false);
     ledCount += 64;
-    centerX = rotateX(12,240,angle);
-    centerY = rotateY(12,240,angle);
-    ledStrip(ledCount, 64, ledX + centerX,ledY + centerY, 1, PI/2 + angle, false);
-    ledCount += 64;
   }
 
-  void benchR(float angle)
+  void benchRInner(float angle)
   {
     int centerX = rotateX(-12,180,angle);
     int centerY = rotateY(-12,180,angle);
@@ -259,8 +255,20 @@ public class OPC implements Runnable
     // void ledStrip(int index, int count, float x, float y, float spacing, float angle, boolean reversed)
     ledStrip(ledCount, 64, ledX + centerX,ledY + centerY, 1, PI/2 + angle, false);
     ledCount += 64;
-    centerX = rotateX(-12,240,angle);
-    centerY = rotateY(-12,240,angle);
+  }
+  
+  void benchLOuter(float angle)
+  {
+    int centerX = rotateX(12,240,angle);
+    int centerY = rotateY(12,240,angle);
+    ledStrip(ledCount, 64, ledX + centerX,ledY + centerY, 1, PI/2 + angle, false);
+    ledCount += 64;
+  }
+
+  void benchROuter(float angle)
+  {
+    int centerX = rotateX(-12,240,angle);
+    int centerY = rotateY(-12,240,angle);
     ledStrip(ledCount, 64, ledX + centerX,ledY + centerY, 1, PI/2 + angle, false);
     ledCount += 64;
   }
